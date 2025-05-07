@@ -1,5 +1,93 @@
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-dark: #0a1a2f;
+  --bg-medium: #112a46;
+  --bg-cell-hover: #1a3a5a;
+  --bg-btn: #034a91;
+  --bg-btn-hover: #0163bf;
+  --text-light: #ffffff;
+  --cell-border: #1c3b5a;
+  --cell-size: 130px;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header,
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--bg-medium);
+}
+
+.title {
+  font-size: 3rem;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.message {
+  margin-bottom: 3rem;
+  font-size: 2rem;
+  height: 1.5rem;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+  gap: 5px;
+  margin: 1rem 0px;
+}
+
+.cell {
+  background-color: var(--bg-medium);
+  border: 2px solid var(--cell-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cell:hover {
+  background-color: var(--bg-cell-hover);
+}
+
+.btn-container {
+  margin-top: 3rem;
+}
+
+.restart-btn {
+  background-color: var(--bg-btn);
+  color: var(--text-light);
+  border: none;
+  padding: 1rem 3rem;
+  font-size: 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.restart-btn:hover {
+  background-color: var(--bg-btn-hover);
 }
