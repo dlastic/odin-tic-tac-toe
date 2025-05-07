@@ -5,7 +5,7 @@ const Gameboard = (() => {
 
   const placeMark = (index, mark) => {
     if (board[index] === "") {
-      board[index] === mark;
+      board[index] = mark;
       return true;
     }
     return false
@@ -30,15 +30,49 @@ const GameController = (() => {
   let currentPlayer;
   let gameOver;
 
-  const playTurn = (index) => {};
+  const playTurn = (index) => {
+    if (gameOver) return;
 
-  const switchPlayer = () => {};
+    if (Gameboard.placeMark(index, currentPlayer.mark)) {
+      if(checkWin(currentPlayer.mark)) {
+        gameOver = true;
+        console.log(`${currentPlayer.name} wins!`);
+      } else if (isFull()) {
+        gameOver = true;
+        console.log("It's a tie!");
+      } else {
+        switchPlayer();
+      }
+    }
+  };
 
-  const checkWin = (mark) => {};
+  const switchPlayer = () => {
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
+  };
 
-  const isTie = () => {};
+  const checkWin = (mark) => {
+    const board = Gameboard.getBoard();
 
-  const restart = () => {};
+    const winPatterns = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],  // rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],  // columns
+      [0, 4, 8], [2, 4, 6]              // diagonals
+    ];
+
+    return winPatterns.some(pattern =>
+      pattern.every(index => board[index] === mark)
+    );
+  };
+
+  const isFull = () => {
+    return Gameboard.getBoard().every(cell => cell !== "");
+  };
+
+  const restart = () => {
+    Gameboard.reset();
+    currentPlayer = player1;
+    gameOver = false;
+  };
 
   return { playTurn, restart };
 })();
