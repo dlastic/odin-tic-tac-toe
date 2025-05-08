@@ -85,11 +85,32 @@ const GameController = (() => {
 const DisplayController = (() => {
   const messageDisplay = document.querySelector(".message");
   const boardContainer = document.querySelector(".gameboard");
+  const cells = document.querySelectorAll(".cell");
   const restartButton = document.querySelector(".restart-btn");
 
-  const renderBoard = () => {};
+  const renderBoard = () => {
+    const board = Gameboard.getBoard();
+
+    cells.forEach((cell, index) => {
+      cell.textContent = board[index];
+    });
+  };
 
   const updateMessage = () => {};
 
-  const bindEvents = () => {};
+  const bindEvents = () => {
+    cells.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        const index = parseInt(cell.dataset.index);
+        GameController.playTurn(index);
+        renderBoard();
+      });
+    });
+  };
+
+  return { renderBoard, updateMessage, bindEvents };
 })();
+
+GameController.restart();
+DisplayController.bindEvents();
+DisplayController.renderBoard();
