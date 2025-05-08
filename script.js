@@ -31,19 +31,25 @@ const GameController = (() => {
   let gameOver;
 
   const playTurn = (index) => {
-    if (gameOver) return;
+    if (gameOver) {
+      return "The game is over. Click the restart button to play again :)";
+    }
 
     if (Gameboard.placeMark(index, currentPlayer.mark)) {
       if (checkWin(currentPlayer.mark)) {
         gameOver = true;
-        console.log(`${currentPlayer.name} wins!`);
-      } else if (isFull()) {
-        gameOver = true;
-        console.log("It's a tie!");
-      } else {
-        switchPlayer();
+        return `${currentPlayer.name} wins!`;
       }
+      if (isFull()) {
+        gameOver = true;
+        return "It's a tie!";
+      }
+
+      switchPlayer();
+      return `Player ${currentPlayer.mark}'s turn`;
     }
+
+    return `Player ${currentPlayer.mark}'s turn`;
   };
 
   const switchPlayer = () => {
@@ -84,7 +90,6 @@ const GameController = (() => {
 
 const DisplayController = (() => {
   const messageDisplay = document.querySelector(".message");
-  const boardContainer = document.querySelector(".gameboard");
   const cells = document.querySelectorAll(".cell");
   const restartButton = document.querySelector(".restart-btn");
 
@@ -96,21 +101,25 @@ const DisplayController = (() => {
     });
   };
 
-  const updateMessage = () => {};
+  const displayMessage = (msg) => {
+    messageDisplay.textContent = msg;
+  };
 
   const bindEvents = () => {
     cells.forEach((cell) => {
       cell.addEventListener("click", () => {
         const index = parseInt(cell.dataset.index);
-        GameController.playTurn(index);
+        msg = GameController.playTurn(index);
         renderBoard();
+        displayMessage(msg);
       });
     });
   };
 
-  return { renderBoard, updateMessage, bindEvents };
+  return { renderBoard, displayMessage, bindEvents };
 })();
 
 GameController.restart();
 DisplayController.bindEvents();
 DisplayController.renderBoard();
+DisplayController.displayMessage("Player X's turn");
