@@ -8,8 +8,8 @@ const Gameboard = (() => {
       board[index] = mark;
       return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const reset = () => {
     for (let i = 0; i < board.length; i++) {
@@ -17,7 +17,7 @@ const Gameboard = (() => {
     }
   };
 
-  return { getBoard, placeMark, reset }
+  return { getBoard, placeMark, reset };
 })();
 
 const Player = (name, mark) => {
@@ -34,7 +34,7 @@ const GameController = (() => {
     if (gameOver) return;
 
     if (Gameboard.placeMark(index, currentPlayer.mark)) {
-      if(checkWin(currentPlayer.mark)) {
+      if (checkWin(currentPlayer.mark)) {
         gameOver = true;
         console.log(`${currentPlayer.name} wins!`);
       } else if (isFull()) {
@@ -54,18 +54,23 @@ const GameController = (() => {
     const board = Gameboard.getBoard();
 
     const winPatterns = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],  // rows
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],  // columns
-      [0, 4, 8], [2, 4, 6]              // diagonals
+      [0, 1, 2], // rows
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6], // columns
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8], // diagonals
+      [2, 4, 6],
     ];
 
-    return winPatterns.some(pattern =>
-      pattern.every(index => board[index] === mark)
+    return winPatterns.some((pattern) =>
+      pattern.every((index) => board[index] === mark)
     );
   };
 
   const isFull = () => {
-    return Gameboard.getBoard().every(cell => cell !== "");
+    return Gameboard.getBoard().every((cell) => cell !== "");
   };
 
   const restart = () => {
@@ -75,4 +80,16 @@ const GameController = (() => {
   };
 
   return { playTurn, restart };
+})();
+
+const DisplayController = (() => {
+  const messageDisplay = document.querySelector(".message");
+  const boardContainer = document.querySelector(".gameboard");
+  const restartButton = document.querySelector(".restart-btn");
+
+  const renderBoard = () => {};
+
+  const updateMessage = () => {};
+
+  const bindEvents = () => {};
 })();
