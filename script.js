@@ -114,6 +114,12 @@ const DisplayController = (() => {
         displayMessage(msg);
       });
     });
+
+    restartButton.addEventListener("click", () => {
+      GameController.restart();
+      renderBoard();
+      displayMessage("Player X's turn");
+    });
   };
 
   return { renderBoard, displayMessage, bindEvents };
